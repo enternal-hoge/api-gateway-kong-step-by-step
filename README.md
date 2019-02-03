@@ -107,6 +107,8 @@ if __name__ == '__main__':
 
 
 ## Register Service
+
+execute kong rest api
 ```
 # curl -X POST -H 'Content-Type:application/json' \
  -d '{"name": "page-service", "retries": 5, "protocol": "http", "host": "localhost", "port": 5000, "path": "/page"}' \
@@ -114,12 +116,15 @@ if __name__ == '__main__':
 {"host":"localhost","created_at":1549174160,"connect_timeout":60000,"id":"8855bebd-a9d9-4f6f-a8cb-1debd31e622f","protocol":"http","name":"page-service","read_timeout":60000,"port":5000,"path":"\/page","updated_at":1549174160,"retries":5,"write_timeout":60000}root@kong:~#
 ```
 
+confirm
 ```
 root@kong:~# curl -X GET http://localhost:8001/services/
 {"next":null,"data":[{"host":"localhost","created_at":1549174160,"connect_timeout":60000,"id":"8855bebd-a9d9-4f6f-a8cb-1debd31e622f","protocol":"http","name":"page-service","read_timeout":60000,"port":5000,"path":"\/page","updated_at":1549174160,"retries":5,"write_timeout":60000}]}root@kong:~#
 ```
 
 ## Register Route
+
+execute kong rest api
 ```
 root@kong:~# curl -i -X POST -H 'Content-Type:application/json' \
 >  -d '{"name": "page-route", "protocols": ["http"], "hosts": ["localhost"], "paths": ["/page"], "regex_priority": 0, "strip_path": true, "preserve_host": false, "service": {"id":"8855bebd-a9d9-4f6f-a8cb-1debd31e622f"}}' \
@@ -135,16 +140,19 @@ Content-Length: 352
 {"created_at":1549175021,"methods":null,"id":"99b17157-2dff-4fad-ae85-449de46a5991","service":{"id":"8855bebd-a9d9-4f6f-a8cb-1debd31e622f"},"name":"page-route","hosts":["localhost"],"updated_at":1549175021,"preserve_host":false,"regex_priority":0,"paths":["\/page"],"sources":null,"destinations":null,"snis":null,"protocols":["http"],"strip_path":true}root@kong:~#
 ```
 
-確認
+confirm
+```
 root@kong:~# curl -X GET http://localhost:8001/routes
 {"next":null,"data":[{"created_at":1549175021,"methods":null,"id":"99b17157-2dff-4fad-ae85-449de46a5991","service":{"id":"8855bebd-a9d9-4f6f-a8cb-1debd31e622f"},"name":"page-route","hosts":["localhost"],"updated_at":1549175021,"preserve_host":false,"regex_priority":0,"paths":["\/page"],"sources":null,"destinations":null,"snis":null,"protocols":["http"],"strip_path":true}]}root@kong:~#
 
-確認
+
 # curl -X GET http://localhost:8001/services/page-service/routes
 {"next":null,"data":[{"created_at":1549175021,"methods":null,"id":"99b17157-2dff-4fad-ae85-449de46a5991","service":{"id":"8855bebd-a9d9-4f6f-a8cb-1debd31e622f"},"name":"page-route","hosts":["localhost"],"updated_at":1549175021,"preserve_host":false,"regex_priority":0,"paths":["\/page"],"sources":null,"destinations":null,"snis":null,"protocols":["http"],"strip_path":true}]}root@kong:~#
+```
 
-
-
+execute kong tutorial procedure
+https://docs.konghq.com/1.0.x/getting-started/configuring-a-service/
+```
 curl -i -X POST \
   --url http://localhost:8001/services/ \
   --data 'name=example-service' \
@@ -157,9 +165,10 @@ curl -i -X POST \
 curl -i -X GET \
   --url http://localhost:8000/ \
   --header 'Host: example.com'
+```
 
-
-
+retry
+```
 # curl -i -X POST \
 >   --url http://localhost:8001/services/ \
 >   --data 'name=hoge-service' \
@@ -181,3 +190,7 @@ curl -i -X POST \
 curl -i -X GET \
   --url http://localhost:8000/hoge \
   --header 'Host: 127.0.0.1'
+```
+
+OOps.
+
