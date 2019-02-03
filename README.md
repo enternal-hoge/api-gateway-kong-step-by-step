@@ -192,5 +192,6 @@ curl -i -X GET \
   --header 'Host: 127.0.0.1'
 ```
 
-OOps.
+OOps. Not match cross functional requirements.
+I don't need HTTP Header 'Host' value.
 
